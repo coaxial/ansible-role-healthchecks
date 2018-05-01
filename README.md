@@ -1,14 +1,12 @@
-Role Name
+Healthchecks role
 =========
 
-A brief description of the role goes here.
+This role will deploy a Dockerized [healthchecks](https://github.com/healthchecks/healthchecks) instance.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should
-be mentioned here. For instance, if the role uses the EC2 module, it may be a
-good idea to mention in this section that the boto package is required.
+- Ubuntu host
 
 Role Variables
 --------------
@@ -34,7 +32,7 @@ passed in as parameters) is always nice for users too:
 
     - hosts: servers
       roles:
-         - { role: ansible-role-healthchecks, x: 42 }
+         - coaxial.healthchecks
 
 License
 -------
@@ -44,5 +42,4 @@ BSD
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a
-website (HTML is not allowed).
+Coaxial, https://64b.it
