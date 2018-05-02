@@ -1,0 +1,17 @@
+---
+jobs:
+  include:
+    - stage: test
+      language: python
+      python: "2.7"
+      cache: pip
+      services:
+        - docker
+      install:
+        - pip install ansible==2.5.0
+        - pip install docker-py
+        - pip install molecule --pre
+      script: molecule test
+
+notifications:
+webhooks: https://galaxy.ansible.com/api/v1/notifications/

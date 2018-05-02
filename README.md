@@ -11,11 +11,19 @@ Requirements
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including
-any variables that are in defaults/main.yml, vars/main.yml, and any variables
-that can/should be set via parameters to the role. Any variables that are read
-from other roles and/or the global scope (ie. hostvars, group vars, etc.) should
-be mentioned here as well.
+name | default value | possible values | purpose | notes
+---|---|---|---|---
+`hc__db_name` | `hc` | any valid database name | database name in the RDBMS
+`hc__db_user` | `postgres` | any valid RDBMS username | username for accessing the database
+`hc__db_password` | none, must be set if using mysql or postgres | any string | set database password |
+`hc__email_host` | none, must be set | any valid hostname, fqdn, or IP | mail server used to send notifications
+`hc__email_port` | `587` | any valid port number | port to connect to the `hc__email_host` server
+`hc__email_user` | `healthchecks` | any username supported by the mail server at `hc__email_host`
+`hc__email_password` | none, must be set | password for `hc__email_user`@`hc__email_host`
+`hc__email_from` | none, must be set | any valid email address | used as the default from address for emails
+`hc__site_name` | `Healthchecks monitoring` | any string | used throughout the app to refer to itself
+`hc__site_root` | none, must be set | sets the root for thisapplication (i.e. `https://example.com/`)
+
 
 Dependencies
 ------------
