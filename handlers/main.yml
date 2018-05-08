@@ -13,4 +13,3 @@
       backups: 0
     state: present
   when: not hc__enable_backups
-
