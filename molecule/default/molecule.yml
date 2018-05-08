@@ -9,7 +9,6 @@ platforms:
   - name: instance
     image: geerlingguy/docker-ubuntu1604-ansible
     command: /sbin/init
-    privileged: true
     capabilities:
       - SYS_ADMIN
 provisioner:
