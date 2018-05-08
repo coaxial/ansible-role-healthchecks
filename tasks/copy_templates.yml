@@ -1,0 +1,35 @@
+- name: Copy templates
+  template:
+    src: templates/"{{ item.src }}"
+    dest: /opt/docker-healthchecks/{{ item.dest }}
+    owner: root
+    group: root
+    mode: '0400'
+  with_items:
+    - src: app.conf.j2
+      dest: nginx/config/app.conf
+    - src: app.env.j2
+      dest: app/app.env
+    - src: db.env.j2
+      dest: db/db.env
+    - src: local_settings.py.j2
+      dest: app/config/local_settings.py
+    - src: passphrase.j2
+      dest: backups/passphrase
+  notify: start app
+
+- name: Copy files
+  file:
+    src: files/"{{ item.src }}"
+    dest: /opt/docker-healthchecks/{{ item.dest }}
+    owner: root
+    group: root
+    mode: '0400'
+  with_items:
+    - src: id_rsa
+      dest: ssh/id_rsa
+    - src: id_rsa.pub
+      dest: ssh/id_rsa.pub
+    - src: known_hosts
+      dest: ssh/known_hosts
+  notify: start app

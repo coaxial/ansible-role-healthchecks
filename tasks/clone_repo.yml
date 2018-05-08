@@ -1,0 +1,14 @@
+---
+- name: Ensure git is present
+  package:
+    name: git
+    state: present
+
+- name: Clone app's repo
+  git:
+    repo: 'https://github.com/coaxial/docker-healthchecks'
+    version: 'master'
+    umask: '022'
+    update: true
+    dest: /opt/docker-healthchecks
+  notify: 'start app'

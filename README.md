@@ -1,12 +1,14 @@
 Healthchecks role
 =========
 
-This role will deploy a Dockerized [healthchecks](https://github.com/healthchecks/healthchecks) instance.
+This role will deploy a Dockerized [healthchecks](https://github.com/healthchecks/healthchecks) instance. Optionally backs up to a borg repo hourly.
 
 Requirements
 ------------
 
 - Ubuntu host
+- borg backup repo (optional)
+- Docker and Docker Compose
 
 Role Variables
 --------------
@@ -22,21 +24,21 @@ name | default value | possible values | purpose | notes
 `hc__email_password` | none, must be set | password for `hc__email_user`@`hc__email_host`
 `hc__email_from` | none, must be set | any valid email address | used as the default from address for emails
 `hc__site_name` | `Healthchecks monitoring` | any string | used throughout the app to refer to itself
-`hc__site_root` | none, must be set | sets the root for thisapplication (i.e. `https://example.com/`)
+`hc__hostname` | none, must be set | sets the root for thisapplication (i.e. `https://example.com/`)
+`hc__su_email` | none, must be set | any valid email address | used to create the first admin user
+`hc__su_password` | none, must be set | any string | used to create the first admin user
+`hc__su_username` | none, must be set | any string of `[a-zA-Z0-9]` characters | used to create the first admin user
+`hc__enable_backups` | `true` | `true` or `false` | enable or disable hourly backups to a borg repo
+`hc__backup_passphrase` | none, must be set | any string | password to the borg repo (if backups are enabled)
 
 
-Dependencies
+Notes
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in
-regards to parameters that may need to be set for other roles, or variables that
-are used from other roles.
+If you want https, you will need to set it up on the host (with nginx as a reverse proxy and let's encrypt for instance)
 
 Example Playbook
 ----------------
-
-Including an example of how to use your role (for instance, with variables
-passed in as parameters) is always nice for users too:
 
     - hosts: servers
       roles:

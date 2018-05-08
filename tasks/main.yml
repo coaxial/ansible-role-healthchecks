@@ -1,2 +1,4 @@
 ---
-# tasks file for ansible-role-healthchecks
+- include_tasks: refresh_apt.yml
+- include_tasks: clone_repo.yml
+- include_tasks: copy_templates.yml
