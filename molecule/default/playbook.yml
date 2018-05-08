@@ -1,5 +1,15 @@
 ---
 - name: Converge
   hosts: all
+  vars:
+    - hc__backup_passphrase: secure
+    - hc__db_password: test
+    - hc__email_from: test@example.org
+    - hc__email_host: example.org
+    - hc__email_password: test
+    - hc__hostname: http://example.org
+    - hc__su_email: test@example.org
+    - hc__su_password: test
+    - hc__su_username: test
   roles:
     - role: ansible-role-healthchecks
