@@ -23,5 +23,11 @@
         state: present
       with_items:
         - docker-py
+
+    - name: Start docker
+      service:
+        name: docker
+        state: started
+
   roles:
     - role: ansible-role-healthchecks
