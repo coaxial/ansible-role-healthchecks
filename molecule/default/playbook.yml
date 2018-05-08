@@ -23,6 +23,5 @@
         state: present
       with_items:
         - docker-py
-        - docker-compose
   roles:
     - role: ansible-role-healthchecks
