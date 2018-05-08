@@ -9,7 +9,7 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 def test_hc_presence(host):
     repo = host.file('/opt/docker-healthchecks')
 
-    repo.exists
+    assert repo.exists
 
 
 def test_files(host):
@@ -24,5 +24,5 @@ def test_files(host):
         'nginx/config/app.conf'
     ]
 
-    for file in files:
-        file.exists
+    for f in files:
+        assert host.file("/opt/docker-healthchecks/" + f).exists

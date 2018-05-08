@@ -8,7 +8,7 @@ Requirements
 
 - Ubuntu host
 - borg backup repo (optional)
-- Docker and Docker Compose
+- Docker and Docker Compose (and their pip modules `docker`, `docker-py`, `docker-compose`)
 
 Role Variables
 --------------

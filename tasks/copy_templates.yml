@@ -1,6 +1,6 @@
 - name: Copy templates
   template:
-    src: templates/"{{ item.src }}"
+    src: templates/{{ item.src }}
     dest: /opt/docker-healthchecks/{{ item.dest }}
     owner: root
     group: root
@@ -18,9 +18,19 @@
       dest: backups/passphrase
   notify: start app
 
-- name: Copy files
+- name: Create directories
   file:
-    src: files/"{{ item.src }}"
+    path: /opt/docker-healthchecks/{{ item.path }}
+    owner: root
+    group: root
+    mode: '0400'
+    state: directory
+  with_items:
+    - path: ssh
+
+- name: Copy files
+  copy:
+    src: files/{{ item.src }}
     dest: /opt/docker-healthchecks/{{ item.dest }}
     owner: root
     group: root
