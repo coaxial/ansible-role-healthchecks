@@ -11,7 +11,6 @@
     - hc__su_email: test@example.org
     - hc__su_password: test
     - hc__su_username: test
-    - hc__testing: true
   pre_tasks:
     - name: Install pip
       package:

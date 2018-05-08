@@ -8,7 +8,7 @@ jobs:
       services:
         - docker
       install:
-        - pip install ansible==2.5.0
+        - pip install ansible
         - pip install docker-py
         - pip install molecule --pre
       script: molecule test

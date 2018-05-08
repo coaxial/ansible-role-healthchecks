@@ -5,7 +5,6 @@
     pull: true
     state: present
   # can't start docker containers within docker containers
-  when: not hc__testing
   notify: disable backups
 
 - name: disable backups
@@ -14,4 +13,4 @@
     scale:
       backups: 0
     state: present
-  when: not hc__enable_backups and not hc__testing
+  when: not hc__enable_backups
