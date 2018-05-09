@@ -11,23 +11,6 @@
     - hc__su_email: test@example.org
     - hc__su_password: test
     - hc__su_username: test
-  pre_tasks:
-    - name: Install pip
-      package:
-        name: python-pip
-        state: present
-
-    - name: Install pip deps
-      pip:
-        name: "{{ item }}"
-        state: present
-      with_items:
-        - docker-py
-
-    - name: Start docker
-      service:
-        name: docker
-        state: started
-
+    - hc__testing: true
   roles:
     - role: ansible-role-healthchecks
