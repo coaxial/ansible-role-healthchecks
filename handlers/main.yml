@@ -1,13 +1,4 @@
 ---
-- name: start app
-  docker_service:
-    project_src: /opt/docker-healthchecks
-    pull: true
-    state: present
-  # can't start docker containers within docker containers
-  when: not hc__testing
-  notify: disable backups
-
 - name: disable backups
   docker_service:
     project_src: /opt/docker-healthchecks

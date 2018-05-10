@@ -5,3 +5,4 @@ hc__site_name: Healthchecks monitoring
 hc__db_user: postgres
 hc__db_name: hc
 hc__enable_backups: true
+hc__testing: false

@@ -30,6 +30,7 @@ name | default value | possible values | purpose | notes
 `hc__su_username` | none, must be set | any string of `[a-zA-Z0-9]` characters | used to create the first admin user
 `hc__enable_backups` | `true` | `true` or `false` | enable or disable hourly backups to a borg repo
 `hc__backup_passphrase` | none, must be set | any string | password to the borg repo (if backups are enabled)
+`hc__borg_repo_url` | none, must be set | any valid borg repo string (cf. https://borgbackup.readthedocs.io/en/stable/usage/general.html#repository-urls)
 
 
 Notes

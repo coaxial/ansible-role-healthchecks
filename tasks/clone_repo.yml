@@ -11,4 +11,3 @@
     umask: '022'
     update: true
     dest: /opt/docker-healthchecks
-  notify: 'start app'

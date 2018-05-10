@@ -16,7 +16,8 @@
       dest: app/config/local_settings.py
     - src: passphrase.j2
       dest: backups/passphrase
-  notify: start app
+    - src: config.yaml.j2
+      dest: backups/config.yaml
 
 - name: Create directories
   file:
@@ -37,9 +38,17 @@
     mode: '0400'
   with_items:
     - src: id_rsa
-      dest: ssh/id_rsa
+      dest: backups/ssh/id_rsa
     - src: id_rsa.pub
-      dest: ssh/id_rsa.pub
+      dest: backups/ssh/id_rsa.pub
     - src: known_hosts
-      dest: ssh/known_hosts
-  notify: start app
+      dest: backups/ssh/known_hosts
+
+- name: Start app
+  docker_service:
+    project_src: /opt/docker-healthchecks
+    pull: true
+    state: present
+  # can't start docker containers within docker containers
+  when: not hc__testing
+  notify: disable backups

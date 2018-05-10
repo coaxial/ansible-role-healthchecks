@@ -14,10 +14,11 @@ def test_hc_presence(host):
 
 def test_files(host):
     files = [
-        'ssh/id_rsa',
-        'ssh/id_rsa.pub',
-        'ssh/known_hosts',
+        'backups/ssh/id_rsa',
+        'backups/ssh/id_rsa.pub',
+        'backups/ssh/known_hosts',
         'backups/passphrase',
+        'backups/config.yaml',
         'app/config/local_settings.py',
         'db/db.env',
         'app/app.env',

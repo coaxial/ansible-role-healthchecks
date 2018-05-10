@@ -3,6 +3,7 @@
   hosts: all
   vars:
     - hc__backup_passphrase: secure
+    - hc__borg_repo_url: user@example.org:repo
     - hc__db_password: test
     - hc__email_from: test@example.org
     - hc__email_host: example.org
