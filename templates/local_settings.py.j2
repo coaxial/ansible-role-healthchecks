@@ -1,0 +1,24 @@
+SITE_ROOT = "{{ hc__hostname }}:6863"
+PING_ENDPOINT = SITE_ROOT + '/ping/'
+SITE_NAME = "{{ hc__site_name }}"
+DEFAULT_FROM_EMAIL = "{{ hc__email_from }}"
+
+EMAIL_HOST = "{{ hc__email_host }}"
+EMAIL_PORT = {{ hc__email_port }}
+EMAIL_HOST_USER = "{{ hc__email_user }}"
+EMAIL_HOST_PASSWORD = "{{ hc__email_password }}"
+EMAIL_USE_TLS = True
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'HOST': 'db',
+        'NAME': '{{ hc__db_name }}',
+        'USER': '{{ hc__db_user }}',
+        'PASSWORD': '{{ hc__db_password }}',
+        'TEST': {'CHARSET': 'UTF8'}
+    }
+}
+
+ALLOWED_HOSTS = ['*']
+DEBUG = False

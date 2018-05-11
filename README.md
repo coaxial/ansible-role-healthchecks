@@ -1,40 +1,49 @@
-Role Name
+Healthchecks role
 =========
 
-A brief description of the role goes here.
+This role will deploy a Dockerized [healthchecks](https://github.com/healthchecks/healthchecks) instance. Optionally backs up to a borg repo hourly.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should
-be mentioned here. For instance, if the role uses the EC2 module, it may be a
-good idea to mention in this section that the boto package is required.
+- Ubuntu host
+- borg backup repo (optional)
+- Docker and Docker Compose (and their pip modules `docker`, `docker-py`, `docker-compose`)
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including
-any variables that are in defaults/main.yml, vars/main.yml, and any variables
-that can/should be set via parameters to the role. Any variables that are read
-from other roles and/or the global scope (ie. hostvars, group vars, etc.) should
-be mentioned here as well.
+name | default value | possible values | purpose | notes
+---|---|---|---|---
+`hc__db_name` | `hc` | any valid database name | database name in the RDBMS
+`hc__db_user` | `postgres` | any valid RDBMS username | username for accessing the database
+`hc__db_password` | none, must be set if using mysql or postgres | any string | set database password |
+`hc__email_host` | none, must be set | any valid hostname, fqdn, or IP | mail server used to send notifications
+`hc__email_port` | `587` | any valid port number | port to connect to the `hc__email_host` server
+`hc__email_user` | `healthchecks` | any username supported by the mail server at `hc__email_host`
+`hc__email_password` | none, must be set | password for `hc__email_user`@`hc__email_host`
+`hc__email_from` | none, must be set | any valid email address | used as the default from address for emails
+`hc__site_name` | `Healthchecks monitoring` | any string | used throughout the app to refer to itself
+`hc__hostname` | none, must be set | sets the root for thisapplication (i.e. `https://example.com/`)
+`hc__su_email` | none, must be set | any valid email address | used to create the first admin user
+`hc__su_password` | none, must be set | any string | used to create the first admin user
+`hc__su_username` | none, must be set | any string of `[a-zA-Z0-9]` characters | used to create the first admin user
+`hc__enable_backups` | `true` | `true` or `false` | enable or disable hourly backups to a borg repo
+`hc__backup_passphrase` | none, must be set | any string | password to the borg repo (if backups are enabled)
+`hc__borg_repo_url` | none, must be set | any valid borg repo string (cf. https://borgbackup.readthedocs.io/en/stable/usage/general.html#repository-urls)
 
-Dependencies
+
+Notes
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in
-regards to parameters that may need to be set for other roles, or variables that
-are used from other roles.
+If you want https, you will need to set it up on the host (with nginx as a reverse proxy and let's encrypt for instance)
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables
-passed in as parameters) is always nice for users too:
-
     - hosts: servers
       roles:
-         - { role: ansible-role-healthchecks, x: 42 }
+         - coaxial.healthchecks
 
 License
 -------
@@ -44,5 +53,4 @@ BSD
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a
-website (HTML is not allowed).
+Coaxial, https://64b.it
