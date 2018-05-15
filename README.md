@@ -24,7 +24,7 @@ name | default value | possible values | purpose | notes
 `hc__email_password` | none, must be set | password for `hc__email_user`@`hc__email_host`
 `hc__email_from` | none, must be set | any valid email address | used as the default from address for emails
 `hc__site_name` | `Healthchecks monitoring` | any string | used throughout the app to refer to itself
-`hc__hostname` | none, must be set | sets the root for thisapplication (i.e. `https://example.com/`)
+`hc__hostname` | none, must be set | sets the root for this application including the port if not standard (i.e. `http://example.com:6863/` or `https://example.org/`) | this role will only enable http, take a look at my [docker-reverse-proxy role](https://github.com/coaxial/ansible-role-docker-reverse-proxy) if you need https
 `hc__su_email` | none, must be set | any valid email address | used to create the first admin user
 `hc__su_password` | none, must be set | any string | used to create the first admin user
 `hc__su_username` | none, must be set | any string of `[a-zA-Z0-9]` characters | used to create the first admin user
