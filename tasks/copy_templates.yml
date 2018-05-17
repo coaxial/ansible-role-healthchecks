@@ -1,3 +1,4 @@
+---
 - name: Copy templates
   template:
     src: templates/{{ item.src }}

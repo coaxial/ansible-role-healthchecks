@@ -1,5 +1,6 @@
 Healthchecks role
 =========
+[![Build Status](https://travis-ci.org/coaxial/ansible-role-healthchecks.svg?branch=master)](https://travis-ci.org/coaxial/ansible-role-healthchecks)
 
 This role will deploy a Dockerized [healthchecks](https://github.com/healthchecks/healthchecks) instance. Optionally backs up to a borg repo hourly.
 
