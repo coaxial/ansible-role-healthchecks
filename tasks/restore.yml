@@ -39,6 +39,7 @@
       | sed 's/image: postgres://'
     "
   register: pg_version
+  changed_when: false
 
 - name: Restore database
   docker_container:
