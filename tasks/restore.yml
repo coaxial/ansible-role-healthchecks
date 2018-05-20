@@ -1,0 +1,82 @@
+---
+- name: Stop database
+  docker_service:
+    project_src: /opt/docker-healthchecks
+    services:
+      - db
+    state: present
+    stopped: true
+
+- name: Create restore volume
+  docker_volume:
+    name: healthchecks-backup-data
+
+- name: Get latest backup
+  docker_container:
+    image: alpine:3.7
+    name: fetch-backup
+    volumes:
+      - /opt/docker-healthchecks/backups/ssh:/root/.ssh:ro
+      - /opt/docker-healthchecks/backups/passphrase:/root/passphrase:ro
+      - healthchecks-backup-data:/backup
+    command: >
+      /bin/sh -c "
+      apk --no-cache add borgbackup openssh-client &&
+      cd /backup &&
+      export BORG_REMOTE_PATH=borg1 &&
+      export BORG_PASSCOMMAND='cat /root/passphrase' &&
+      borg list --short --last 1 {{ hc__borg_repo_url }} | xargs -I '{}' borg extract --strip-component 1 --sparse {{ hc__borg_repo_url }}::'{}'
+      "
+    cleanup: true
+    detach: false
+
+- name: Find out Postgres version
+  command: >
+    /bin/sh -c "
+    grep -iEo \
+      'image: postgres:.*' \
+      /opt/docker-healthchecks/docker-compose.yml \
+      | sed 's/image: postgres://'
+    "
+  register: pg_version
+
+- name: Restore database
+  docker_container:
+    image: postgres:{{ pg_version.stdout_lines[0] }}
+    name: restore-backup
+    volumes:
+      - healthchecks-backup-data:/backup:ro
+      - docker-healthchecks_db:/var/lib/postgresql/data
+    entrypoint: ''
+    command: >
+      /bin/sh -c '
+      /bin/su postgres -m -c "
+      /usr/lib/postgresql/$PG_MAJOR/bin/pg_ctl start" &&
+      /usr/bin/dropdb -U postgres {{ hc__db_name }} &&
+      /usr/bin/createdb -U postgres {{ hc__db_name }} &&
+      /usr/bin/psql -U postgres --single-transaction {{ hc__db_name }} < /backup/db.sql &&
+      /bin/su postgres -m -c "/usr/lib/postgresql/$PG_MAJOR/bin/pg_ctl stop"
+      '
+    cleanup: true
+    detach: false
+
+- name: Remove volume
+  docker_volume:
+    name: healthchecks-backups-database
+    state: absent
+
+- name: Restart database
+  docker_service:
+    project_src: /opt/docker-healthchecks
+    services:
+      - db
+    state: present
+  when: not hc__testing
+
+- name: Disable backups
+  docker_service:
+    project_src: /opt/docker-healthchecks
+    scale:
+      backups: 0
+    state: present
+  when: not hc__enable_backups and not hc__testing

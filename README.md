@@ -2,7 +2,7 @@ Healthchecks role
 =========
 [![Build Status](https://travis-ci.org/coaxial/ansible-role-healthchecks.svg?branch=master)](https://travis-ci.org/coaxial/ansible-role-healthchecks)
 
-This role will deploy a Dockerized [healthchecks](https://github.com/healthchecks/healthchecks) instance. Optionally backs up to a borg repo hourly.
+This role will deploy a Dockerized [healthchecks](https://github.com/healthchecks/healthchecks) instance. Optionally backs up to a borg repo hourly and optionally restores the latest backup after installing.
 
 Requirements
 ------------
@@ -32,12 +32,13 @@ name | default value | possible values | purpose | notes
 `hc__enable_backups` | `true` | `true` or `false` | enable or disable hourly backups to a borg repo
 `hc__backup_passphrase` | none, must be set | any string | password to the borg repo (if backups are enabled)
 `hc__borg_repo_url` | none, must be set | any valid borg repo string (cf. https://borgbackup.readthedocs.io/en/stable/usage/general.html#repository-urls)
+`hc__restore_backup` | `false` | `true` or `false` | whether to restore the latest borg backup after installing
 
 
 Notes
 ------------
 
-If you want https, you will need to set it up on the host (with nginx as a reverse proxy and let's encrypt for instance)
+If you want https, you will need to set it up on the host (with nginx as a reverse proxy and let's encrypt for instance). See my [`docker-proxy`](https://galaxy.ansible.com/coaxial/docker-proxy/) role to achieve that.
 
 Example Playbook
 ----------------

@@ -2,3 +2,5 @@
 - include_tasks: refresh_apt.yml
 - include_tasks: clone_repo.yml
 - include_tasks: copy_templates.yml
+- include_tasks: restore.yml
+  when: hc__restore_backup
